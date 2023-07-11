@@ -25,7 +25,7 @@ function createWindow() {
   // );
 
   // 加载应用----适用于 react 项目
-  mainWindow.loadURL("http://localhost:3000/");
+  mainWindow.loadURL("http://localhost:3001/");
 
   // 打开开发者工具，默认不打开
   // mainWindow.webContents.openDevTools()
