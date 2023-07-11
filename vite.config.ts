@@ -17,4 +17,18 @@ export default defineConfig({
       },
     },
   },
+  base: './',
+  resolve: {
+    alias: [
+      {
+        find: '@',
+        replacement: pathResolve('render'),
+      }
+    ]
+  }
 });
+
+function pathResolve(dir: string) {
+  return path.resolve(process.cwd(), '.', dir)
+}
+
