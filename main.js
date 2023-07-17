@@ -1,19 +1,37 @@
 // 引入electron并创建一个Browserwindow
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
+// const {} = require("lodash")
 
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 400,
+    height: 350,
     webPreferences: {
       preload: path.join(__dirname, "preload/index.js"),
     },
+    show: false,
+    darkTheme: true,
+    frame: false,
+    resizable: false,
   });
+
+  const getCurrWin = (event) => {
+    const webContents = event.sender;
+    return BrowserWindow.fromWebContents(webContents);
+  };
+
+  ipcMain.on("minimize", (event) => {
+    const webContents = event.sender;
+    const win = BrowserWindow.fromWebContents(webContents);
+    win.minimize();
+    win.maximize();
+    win.close();
+  }).on;
 
   // 加载应用-----  electron-quick-start中默认的加载入口
   // mainWindow.loadURL(
@@ -25,10 +43,11 @@ function createWindow() {
   // );
 
   // 加载应用----适用于 react 项目
-  mainWindow.loadURL("http://localhost:3001/");
+  mainWindow.loadURL("http://localhost:3000/");
 
-  // 打开开发者工具，默认不打开
-  // mainWindow.webContents.openDevTools()
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
 
   // 关闭window时触发下列事件.
   mainWindow.on("closed", function () {

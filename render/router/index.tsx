@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
 import Main from "@/views/Main";
-import LandingPage from "@/views/LandingPage";
+import LandingPage from "@/views/Login";
 
 type IAddiRouteParam = {
   hidden?: boolean;
@@ -17,12 +17,12 @@ const routes: IRoute[] = [];
 const wrapRoutes: IRoute[] = [
   {
     name: "首页",
-    path: "/LandingPage",
+    path: "/",
     element: <LandingPage></LandingPage>,
   },
   {
     name: "主页",
-    path: "/",
+    path: "/LandingPage",
     element: <Main />,
     children: routes,
   },
